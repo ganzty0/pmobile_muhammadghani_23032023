@@ -1,0 +1,42 @@
+class ValidationException implements Exception {
+  final String message;
+  
+  ValidationException(this.message);
+
+  String toString() => 'ValidationException: $message';
+}
+
+class Validation {
+  static void validate(String username, String password) {
+    if (username.isEmpty || password.isEmpty) {
+      throw ValidationException("Username or Password is blank");
+    } else if (username != "eko" || password != "eko") {
+      throw Exception("Login failed");
+    }
+    print("Login berhasil! Welcome, $username.");
+  }
+}
+
+void main() {
+  print("--- Percobaan 1: Login Gagal ---");
+  try {
+    Validation.validate("eko", "salah"); 
+    
+  } on ValidationException catch (exception) {
+    print("Error Validation : ${exception.message}");
+    
+  } on Exception catch (exception) {
+    print("Error Umum : ${exception.toString()}");
+  }
+  
+  print("\n--- Percobaan 2: Validasi Gagal ---");
+  try {
+    Validation.validate("", ""); 
+    
+  } on ValidationException catch (exception) {
+    print("Error Validation : ${exception.message}");
+    
+  } on Exception catch (exception) {
+    print("Error Umum : ${exception.toString()}");
+  }
+}
